@@ -1,8 +1,7 @@
 /*
- * Displays a help menu.
+ * Creates a help menu in the center of the screen that can be turned on/off by pressing 'h'.
  */
 var Help = {
-  // init variables
   _isInit: false,
   _isOn: false,
   _width: 400,
@@ -61,7 +60,7 @@ var Help = {
         .style(Help._style.content);
 
       // set key events
-      d3.select(document).on("keydown", function() {
+      d3.select("body").on("keydown", function() {
         switch(d3.event.which) {
           case 72:
             if (Help.on())
@@ -71,6 +70,9 @@ var Help = {
             Help.off();
             break;
         }
+      });
+      d3.select("#help").on("click", function(){
+        Help.off();
       });
     }
   },
@@ -128,5 +130,9 @@ var Help = {
       .each("end", function() {
         d3.select("#help").style("display", "none");
       });
+  },
+
+  is: function() {
+    return this._isOn;
   }
 };
