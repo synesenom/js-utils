@@ -1,6 +1,11 @@
 # js-utils
-Some convenience javascript functions
+Some convenience javascript libraries (well, just simple objects, tbh...)
 
-`help`  a simple help menu 'H'
-`dnd`   drag-and-drop manager
-`dl`    downloads an SVG in PNG format.
+library | description
+--- | ---
+`help` | a simple help menu 'H'  
+`dnd` | drag-and-drop manager  
+`dl` | downloads an SVG in PNG format.  
+
+# requirements
+`d3`
