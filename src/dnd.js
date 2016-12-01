@@ -9,7 +9,7 @@ var dnd = {
       width: "100%",
       height: "100%",
       "background-color": "rgba(255, 255, 255, 0.9)",
-      "font-family": "sans-serif",
+      "font-family": "inherit",
       "font-size": "20pt",
       "font-weight": "200",
       "color": "#3399ff"
