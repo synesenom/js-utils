@@ -1,11 +1,16 @@
-# js-utils
+# description
 Some convenience javascript libraries
 
-`help`  a simple help menu  
-`dnd`   drag-and-drop manager  
-`dl`    downloads an SVG in PNG format. 
+library | description
+--- | ---
+`help` | a simple help menu  
+`dnd` | drag-and-drop manager  
+`dl` | downloads an SVG in PNG format.  
 
-# Usage
+# requirements
+`d3`
+
+# usage
 dl methods:
 
 `dl.png(svg, filename, options)`
