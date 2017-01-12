@@ -1,9 +1,8 @@
 /*
- * Creates a help menu in the center of the screen
- * that can be turned on/off by pressing 'h'.
+ * Creates a help menu in the center of the screen that can be turned on/off by pressing 'h'.
  */
+
 var Help = {
-  // Status and style parameters
   _isInit: false,
   _isOn: false,
   _width: 400,
@@ -20,7 +19,7 @@ var Help = {
       "display": "none",
       "opacity": 0
     },
-    box: {
+    wrapper: {
       "position": "absolute",
       "top": "50%",
       "left": "50%",
@@ -29,49 +28,60 @@ var Help = {
       "padding": "20px",
       "margin-left": "-220px",
       "margin-top": "-170px",
-      "font-family": "inherit",
+      "box-shadow": "1px 1px 2px gray",
+      "background-color": "rgba(255, 255, 255, 0.6)",
+      "border": "1px solid rgba(0, 0, 0, 0.1)",
+      "border-radius": 2
+    },
+    box: {
+      "height": "320px",
       "font-size": "11pt",
+      "font-weight": "400",
       "color": "black",
       "text-align": "justify",
-      "border": "1px solid rgba(0, 0, 0, 0.1)",
-      "border-radius": 2,
-      "box-shadow": "1px 1px 2px gray",
-      "background-color": "rgba(255, 255, 255, 0.5)"
+      "overflow": "scroll"
     },
     content: {
       "position": "relative"
     }
   },
+  _wrapper: null,
   _box: null,
   _content: null,
 
-  /**
-   * Initializes help menu by creating the elements
-   * and setting the style.
-   */
+  style: function(elem, css) {
+    for (var key in css) {
+      elem.style(key, css[key]);
+    }
+  },
+
   init: function() {
     if (!this._isInit) {
       // set init to true
       this._isInit = true;
 
-      // add DOM elements
-      var helpElem = d3.select("body")
+      // add help div
+      var help = d3.select("body")
         .append("div")
-        .attr("id", "help")
-        .style(Help._style.help);
-      this._box = helpElem.append("div")
-        .style(Help._style.box);
+        .attr("id", "help");
+      this.style(help, Help._style.help);
+
+      // add wrapper div
+      this._wrapper = help.append("div");
+      this.style(this._wrapper, Help._style.wrapper);
+
+      // add box div
+      this._box = this._wrapper.append("div")
+      this.style(this._box, Help._style.box);
+
+      // add content div
       this._content = this._box.append("div")
         .attr("class", "content")
-        .style(Help._style.content);
+      this.style(this._content, Help._style.content);
 
       // set key events
       d3.select("body").on("keydown", function() {
         switch(d3.event.which) {
-          case 72:
-            if (Help.on())
-              Help.off();
-            break;
           case 27:
             Help.off();
             break;
@@ -83,12 +93,6 @@ var Help = {
     }
   },
 
-  /**
-   * Sets help menu with.
-   *
-   * @param {number} width Width to set.
-   * @return {object} Reference to this object.
-   */
   width: function(width) {
     this.init();
     this._width = width;
@@ -98,12 +102,6 @@ var Help = {
     return this;
   },
 
-  /**
-   * Sets help menu height.
-   *
-   * @param {number} height Height to set.
-   * @return {object} Reference to this object.
-   */
   height: function(height) {
     this.init();
     this._height = height;
@@ -113,12 +111,6 @@ var Help = {
     return this;
   },
 
-  /**
-   * Sets help menu padding.
-   *
-   * @param {number} padding Padding to set.
-   * @return {object} Reference to this object.
-   */
   padding: function(padding) {
     this.init();
     this._padding = padding;
@@ -129,23 +121,12 @@ var Help = {
     return this;
   },
 
-  /**
-   * Sets help menu content.
-   *
-   * @param {string} content Content of the help menu.
-   * @return {object} Reference to this object.
-   */
   content: function(content) {
     this.init();
     this._content.html(content);
     return this;
   },
 
-  /**
-   * Turns on (shows) help menu,
-   *
-   * @return {boolean} True if it's already on, false otherwise.
-   */
   on: function() {
     if (!this._isOn) {
       this._isOn = true;
@@ -157,24 +138,16 @@ var Help = {
       return true;
   },
 
-  /**
-   * Turns of (hides) help menu,
-   */
   off: function() {
     this._isOn = false;
     d3.select("#help")
       .transition().duration(500)
       .style("opacity", 0)
-      .each("end", function() {
+      .on("end", function() {
         d3.select("#help").style("display", "none");
       });
   },
 
-  /**
-   * Returns whether it is on or off
-   *
-   * @return {boolean} True if it's on, false otherwise.
-   */
   is: function() {
     return this._isOn;
   }
